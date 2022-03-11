@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="/" method="POST">
+        <input type="number" name="code" placeholder="codigo del producto">
+        <input type="text"  name="name" placeholder="nombre">
+        <input type="number"  name="stock" placeholder="Disponibilidad">
+        <input type="numer"  name="value" placeholder="vlaor del producto">
+        <select name="category_id" >
+            <option selected>Seleccione categoria...</option>
+            {% if categories %}
+                {% for categori in categories %}
+                    <option value="{{categori.0}}">{{categori.1}}</option>
+                {% endfor %}
+            {% else %}
+                <p>Please create some Categories</p>
+            {% endif %}
+        </select>
+        <button type="submit">Enviar</button>
+    </form>
+
+    {% if data %}
+        {% for product in data %}
+            {{product.1}}
+            <form action="/delete/product/{{product.0}}" method="POST">
+                <button>Eliminar</button>
+            </form>
+
+            <a href="/update/product/{{product.0}}">
+                actualizar
+            </a>
+        {% endfor %}
+    {% else %}
+        <p>Please create some products</p>
+
+    {% endif %}
+{% endblock  %}
